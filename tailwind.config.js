@@ -9,7 +9,6 @@ export default {
     './resources/**/*.js',
     './resources/**/*.ts',
     './resources/**/*.tsx',
-    './resources/**/*.vue',
   ],
   theme: {
     extend: {

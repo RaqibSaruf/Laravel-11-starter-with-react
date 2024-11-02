@@ -1,23 +1,22 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
-import vue from '@vitejs/plugin-vue';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [
     laravel({
-      input: ['resources/css/app.css', 'resources/js/app.ts'],
+      input: ['resources/css/app.css', 'resources/js/app.tsx'],
       refresh: true,
     }),
-    vue(),
+    react(),
   ],
   optimizeDeps: {
-    include: ['vue'], // Pre-bundle 'vue' dependency
-    entries: ['resources/js/app.ts'], // Explicit entry files
+    entries: ['resources/js/app.tsx'], // Explicit entry files
   },
   build: {
     rollupOptions: {
       input: {
-        main: 'resources/js/app.ts', // Define your entry point explicitly
+        main: 'resources/js/app.tsx', // Define your entry point explicitly
         style: 'resources/css/app.css',
       },
     },

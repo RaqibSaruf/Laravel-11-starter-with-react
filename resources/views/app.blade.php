@@ -2,7 +2,8 @@
 <html>
 
 <head>
-    @vite('resources/js/app.ts')
+    @viteReactRefresh
+    @vite('resources/js/app.tsx')
 </head>
 
 <body>

@@ -21,6 +21,11 @@ class AuthenticatedSessionService
         )->plainTextToken;
         $user->token_expired_at = $tokenExpiredAt;
 
+        $user->load([
+            'roles:id,name',
+            'roles.permissions:id,name',
+        ]);
+
         return $user;
     }
 
