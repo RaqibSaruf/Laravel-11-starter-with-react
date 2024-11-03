@@ -1,15 +1,25 @@
-import { useState } from 'react';
+import { Response } from '@/helpers/response.helper';
+import { useAuth } from '@/hooks/useAuth';
+import { FunctionComponent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login: FunctionComponent = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const [input, setInput] = useState({
-    username: '',
+    email: '',
     password: '',
   });
 
-  const handleSubmitEvent = (e: any) => {
+  const handleSubmitEvent = async (e: any) => {
     e.preventDefault();
-    if (input.username !== '' && input.password !== '') {
+    if (input.email !== '' && input.password !== '') {
       //dispatch action from hooks
+      const response = await login(input.email, input.password);
+      if (Response.isSuccessfull(response?.statusCode)) {
+        navigate('/dashboard', { replace: true });
+      }
+      return;
     }
     alert('please provide a valid input');
   };
@@ -36,7 +46,7 @@ const Login = () => {
           onChange={handleInput}
         />
         <div id="user-email" className="sr-only">
-          Please enter a valid username. It must contain at least 6 characters.
+          Please enter a valid email. It must contain at least 6 characters.
         </div>
       </div>
       <div className="form_control">

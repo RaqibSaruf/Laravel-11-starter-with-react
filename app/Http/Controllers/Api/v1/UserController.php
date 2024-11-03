@@ -61,6 +61,7 @@ class UserController extends Controller
     {
         $this->authorize('show', $user);
 
+        $user->is_verified = $user->isVerified();
         $user->load('roles:id,name');
 
         return response()->json([

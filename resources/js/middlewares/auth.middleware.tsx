@@ -8,7 +8,11 @@ interface AuthMiddlewareProps {
 }
 
 const AuthMiddleware: React.FC<AuthMiddlewareProps> = ({ allowedRoles }) => {
-  const { isAuthenticated, authUser } = useAuth();
+  const { isAuthenticated, authUser, loading } = useAuth();
+
+  if (loading) {
+    return <></>;
+  }
 
   if (!isAuthenticated) {
     return <Navigate to="/unauthorized" replace />;

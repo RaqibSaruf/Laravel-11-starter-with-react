@@ -1,16 +1,22 @@
-import { User } from '@/types/user';
+import { makeResponse } from '@/helpers/response.helper';
+import axios from '@/lib/axios';
+import { ApiResponse } from '@/types';
+import { AuthUser } from '@/types/auth';
 
-const mockUser: User = { id: '1', name: 'John Doe', email: 'test1@example.com', roles: [{ id: 2, name: 'user' }] };
-const mockAdmin: User = { id: '2', name: 'Admin', email: 'test2@example.com', roles: [{ id: 1, name: 'admin' }] };
-
-export const loginAPI = (username: string, password: string): Promise<User> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(username === 'admin' && password === '12345678' ? mockAdmin : mockUser);
-    }, 500);
-  });
+export const loginAPI = async (email: string, password: string): Promise<ApiResponse<AuthUser>> => {
+  try {
+    const response = await axios.post('/login', { email, password });
+    return makeResponse<AuthUser>(response);
+  } catch (error: any) {
+    return makeResponse<AuthUser>(error?.response, true);
+  }
 };
 
-export const logoutAPI = () => {
-  console.log('Logged out');
+export const logoutAPI = async (logoutFromAllDevice = false): Promise<ApiResponse<unknown>> => {
+  try {
+    const response = await axios.delete('/logout', { data: { logout_from_all_device: logoutFromAllDevice } });
+    return makeResponse<unknown>(response);
+  } catch (error: any) {
+    return makeResponse<unknown>(error?.response, true);
+  }
 };
